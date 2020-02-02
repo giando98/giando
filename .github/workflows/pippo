@@ -1,0 +1,209 @@
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+int touch=12;
+int reset=13;
+int zer=10;
+int val,res,ze,count=0;
+int G=2;
+int F=3;
+int A=4;
+int B=5;
+int DP=6;
+int C=7;
+int D=8;
+int E=9;
+
+Adafruit_SSD1306 display(128,32, &Wire,13);
+void setup(){
+  if(!display.begin(SSD1306_SWITCHCAPVCC,0x3C)){
+    while(true);
+  }
+  display.display();
+  display.clearDisplay();
+  
+  Serial.begin(9600);
+  pinMode(touch,INPUT_PULLUP);
+  pinMode(reset,INPUT_PULLUP);
+  pinMode(zer,INPUT_PULLUP);
+  pinMode(G, OUTPUT);
+  pinMode(F, OUTPUT);
+  pinMode(A, OUTPUT);
+  pinMode(B, OUTPUT);
+  pinMode(E, OUTPUT);
+  pinMode(D, OUTPUT);
+  pinMode(C, OUTPUT);
+  pinMode(DP, OUTPUT);
+}
+ 
+void zero(){
+  digitalWrite(G, LOW);
+  digitalWrite(F, HIGH);
+  digitalWrite(A, HIGH);
+  digitalWrite(B, HIGH);
+  digitalWrite(E, HIGH);
+  digitalWrite(D, HIGH);
+  digitalWrite(C, HIGH);
+  digitalWrite(DP, LOW);
+}
+void uno(){
+  digitalWrite(G, LOW);
+  digitalWrite(F, LOW);
+  digitalWrite(A, LOW);
+  digitalWrite(B, HIGH);
+  digitalWrite(E, LOW);
+  digitalWrite(D, LOW);
+  digitalWrite(C, HIGH);
+  digitalWrite(DP, LOW);
+}
+void due(){
+  digitalWrite(G, HIGH);
+  digitalWrite(F, LOW);
+  digitalWrite(A, HIGH);
+  digitalWrite(B, HIGH);
+  digitalWrite(E, HIGH);
+  digitalWrite(D, HIGH);
+  digitalWrite(C, LOW);
+  digitalWrite(DP, LOW);
+}
+void tre(){
+  digitalWrite(G, HIGH);
+  digitalWrite(F, LOW);
+  digitalWrite(A, HIGH);
+  digitalWrite(B, HIGH);
+  digitalWrite(E, LOW);
+  digitalWrite(D, HIGH);
+  digitalWrite(C, HIGH);
+  digitalWrite(DP, LOW);
+}
+void quattro(){
+  digitalWrite(G, HIGH);
+  digitalWrite(F, HIGH);
+  digitalWrite(A, LOW);
+  digitalWrite(B, HIGH);
+  digitalWrite(E, LOW);
+  digitalWrite(D, LOW);
+  digitalWrite(C, HIGH);
+  digitalWrite(DP, LOW);
+}
+void cinque(){
+  digitalWrite(G, HIGH);
+  digitalWrite(F, HIGH);
+  digitalWrite(A, HIGH);
+  digitalWrite(B, LOW);
+  digitalWrite(E, LOW);
+  digitalWrite(D, HIGH);
+  digitalWrite(C, HIGH);
+  digitalWrite(DP, LOW);
+}
+void six(){
+  digitalWrite(G, HIGH);
+  digitalWrite(F, HIGH);
+  digitalWrite(A, HIGH);
+  digitalWrite(B, LOW);
+  digitalWrite(E, HIGH);
+  digitalWrite(D, HIGH);
+  digitalWrite(C, HIGH);
+  digitalWrite(DP, LOW);
+}
+void sette(){
+  digitalWrite(G, LOW);
+  digitalWrite(F, LOW);
+  digitalWrite(A, HIGH);
+  digitalWrite(B, HIGH);
+  digitalWrite(E, LOW);
+  digitalWrite(D, LOW);
+  digitalWrite(C, HIGH);
+  digitalWrite(DP, LOW);
+}
+void otto(){
+  digitalWrite(G, HIGH);
+  digitalWrite(F, HIGH);
+  digitalWrite(A, HIGH);
+  digitalWrite(B, HIGH);
+  digitalWrite(E, HIGH);
+  digitalWrite(D, HIGH);
+  digitalWrite(C, HIGH);
+  digitalWrite(DP, LOW);
+}
+void nove(){ 
+  digitalWrite(G, HIGH);
+  digitalWrite(F, HIGH);
+  digitalWrite(A,HIGH);
+  digitalWrite(B, HIGH);
+  digitalWrite(E, LOW);
+  digitalWrite(D, HIGH);
+  digitalWrite(C, HIGH);
+  digitalWrite(DP, LOW);
+}
+ int x=0;
+void loop(){
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(WHITE);
+  display.cp437(true);
+
+  display.setCursor(0,0);
+  display.print("Count:");
+  display.print(count);
+  display.display();
+  delay(50);
+ 
+  val=digitalRead(touch);
+  res=digitalRead(reset);
+  ze=digitalRead(zer);
+  if(val==LOW){
+    count=count+1;
+  }
+  if(res==LOW){
+    count=count-1;
+  }
+  if(count<0){
+    count=0;
+  }
+  if(ze==LOW){
+    count=0;
+  }
+  Serial.println(count);
+  if(count==0){
+    zero();
+    delay(120);
+  }
+  if(count==1){
+    uno();
+    delay(120);
+    }
+  if(count==2){
+    due();
+    delay(120);
+  }
+  if(count==3){
+    tre();
+    delay(120);
+  }
+  if(count==4){
+    quattro();
+    delay(120);
+  }
+  if(count==5){
+    cinque();
+    delay(120);
+  }
+  if(count==6){
+    six();
+    delay(120);
+  }
+  if(count==7){
+    sette();
+    delay(120);
+  }
+  if(count==8){
+    otto();
+    delay(120);
+  }
+  if(count==9){
+    nove();
+    delay(120);
+  }
+    
+}
